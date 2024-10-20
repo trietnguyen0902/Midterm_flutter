@@ -1,0 +1,9 @@
+{
+    "title": "¡Hola, Mundo!",
+    "greetingMessage": "¡Bienvenido a la aplicación multilingüe de Flutter!",
+    "currentDate": "Fecha actual",
+    "currencyMessage": "Precio: {price}",
+    "items": "{howMany, plural, one{Tienes 1 artículo} other{Tienes {howMany} artículos}}",
+    "genderMessage": "{gender, select, male{¡Bienvenido, señor!} female{¡Bienvenida, señora!} other{¡Bienvenido!}}"
+  }
+  
