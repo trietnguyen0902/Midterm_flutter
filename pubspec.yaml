@@ -36,9 +36,7 @@ flutter:
   uses-material-design: true # Material Icons
 
   assets:
-    - lib/i10n/intl_en.arb
-    - lib/i10n/intl_es.arb
-    - lib/i10n/intl_fr.arb
+
     - lib/lang/en.json
     - lib/lang/es.json
     - lib/lang/fr.json

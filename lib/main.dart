@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 void main() {
   runApp(WeatherApp());
@@ -15,7 +17,7 @@ class WeatherApp extends StatefulWidget {
 }
 
 class _WeatherAppState extends State<WeatherApp> {
-  Locale _locale = Locale('en');  // Default language is English
+  Locale _locale = const Locale('en'); // Default language is English
   Map<String, String> _localizedStrings = {};
 
   @override
@@ -25,10 +27,12 @@ class _WeatherAppState extends State<WeatherApp> {
   }
 
   void _loadLocalizedStrings() async {
-    String jsonString = await rootBundle.loadString('lib/lang/${_locale.languageCode}.json');
+    String jsonString =
+        await rootBundle.loadString('lib/lang/${_locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
     setState(() {
-      _localizedStrings = jsonMap.map((key, value) => MapEntry(key, value.toString()));
+      _localizedStrings =
+          jsonMap.map((key, value) => MapEntry(key, value.toString()));
     });
   }
 
@@ -47,12 +51,12 @@ class _WeatherAppState extends State<WeatherApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       locale: _locale,
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en', ''),
         Locale('fr', ''),
         Locale('es', ''),
       ],
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
@@ -80,45 +84,59 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  String _city = "New York";
+  String _city = "Saigon"; // Default city
   String _temperatureUnit = "metric"; // Default to Celsius
   String _weatherDescription = "";
+  String _weatherIcon = "";
   double _temperature = 0.0;
   int _humidity = 0;
   int _pressure = 0;
   String _currentTime = "";
+  String apiKey = 'dc6b82ef8b8311f032e5b7b9b4101410';
 
-  final String apiKey = '961753dcbebe7804a0ab5a3bf41bdc5e';
-
-  void _fetchWeatherAndTime() async {
-    String weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=$_city&units=$_temperatureUnit&appid=$apiKey";
-    String timeUrl = "http://worldtimeapi.org/api/timezone/America/New_York";  // Adjust according to the city
+  void _fetchWeatherAndTime(String city) async {
+    String weatherUrl =
+        "https://api.openweathermap.org/data/2.5/weather?q=$city&units=$_temperatureUnit&appid=$apiKey";
 
     final weatherResponse = await http.get(Uri.parse(weatherUrl));
-    final timeResponse = await http.get(Uri.parse(timeUrl));
 
     if (weatherResponse.statusCode == 200) {
       var weatherData = jsonDecode(weatherResponse.body);
       setState(() {
         _temperature = weatherData['main']['temp'];
         _weatherDescription = weatherData['weather'][0]['description'];
+        _weatherIcon = weatherData['weather'][0]['icon'];
         _humidity = weatherData['main']['humidity'];
         _pressure = weatherData['main']['pressure'];
       });
-    }
 
-    if (timeResponse.statusCode == 200) {
-      var timeData = jsonDecode(timeResponse.body);
+      // Get timezone offset from weather data
+      int timezoneOffset = weatherData['timezone'];
+      _fetchCurrentTime(timezoneOffset);
+    } else {
       setState(() {
-        _currentTime = timeData['datetime'];
+        _weatherDescription = "City not found!";
       });
     }
+  }
+
+  void _fetchCurrentTime(int timezoneOffset) async {
+    // Get the current UTC time
+    DateTime nowUtc = DateTime.now().toUtc();
+
+    DateTime localTime = nowUtc.add(Duration(seconds: timezoneOffset));
+
+    String formattedTime = DateFormat('HH:mm:ss').format(localTime);
+
+    setState(() {
+      _currentTime = formattedTime;
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    _fetchWeatherAndTime();
+    _fetchWeatherAndTime(_city); // Fetch weather and time when the app starts
   }
 
   @override
@@ -128,27 +146,48 @@ class _WeatherScreenState extends State<WeatherScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          // Display the chosen city name
+          Text(
+            _city,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 20),
           TextField(
             onChanged: (value) {
-              _city = value;
+              _city = value; // Update the city name when input changes
             },
             decoration: InputDecoration(
               labelText: widget.translate("enter_city"),
+              fillColor: Colors.white,
+              filled: true,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: _fetchWeatherAndTime,
-            child: Text(widget.translate("app_title")),
+            onPressed: () {
+              _fetchWeatherAndTime(
+                  _city); // Fetch new data when user enters a new city
+            },
+            child: Text(widget.translate("get_weather")),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
+          // Weather Icon
+          if (_weatherIcon.isNotEmpty)
+            CachedNetworkImage(
+              imageUrl: "http://openweathermap.org/img/wn/$_weatherIcon@2x.png",
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
+          const SizedBox(height: 20),
+          // Weather Details
           Text("${widget.translate("temperature")}: $_temperature °C"),
           Text("${widget.translate("description")}: $_weatherDescription"),
           Text("${widget.translate("humidity")}: $_humidity%"),
           Text("${widget.translate("pressure")}: $_pressure hPa"),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text("${widget.translate("current_time")}: $_currentTime"),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
+          // Language Selector
           DropdownButton<Locale>(
             onChanged: (Locale? newValue) {
               if (newValue != null) {
@@ -156,9 +195,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
               }
             },
             items: const [
-              DropdownMenuItem(child: Text('English'), value: Locale('en')),
-              DropdownMenuItem(child: Text('French'), value: Locale('fr')),
-              DropdownMenuItem(child: Text('Spanish'), value: Locale('es')),
+              DropdownMenuItem(value: Locale('en'), child: Text('English')),
+              DropdownMenuItem(value: Locale('fr'), child: Text('French')),
+              DropdownMenuItem(value: Locale('es'), child: Text('Spanish')),
             ],
             hint: Text(widget.translate("select_language")),
           ),
