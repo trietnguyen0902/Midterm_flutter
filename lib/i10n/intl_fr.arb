@@ -1,0 +1,28 @@
+{
+    "@@locale": "fr",
+    "title": "Bonjour, le Monde!",
+    "@title": {},
+    "greetingMessage": "Bienvenue dans l'application multilingue Flutter!",
+    "@greetingMessage": {},
+    "currentDate": "Date actuelle",
+    "@currentDate": {},
+    "currencyMessage": "Prix : {price}",
+    "@currencyMessage": {
+        "placeholders": {
+            "price": {}
+        }
+    },
+    "items": "{howMany, plural, one{Vous avez 1 article} other{Vous avez {howMany} articles}}",
+    "@items": {
+        "placeholders": {
+            "howMany": {}
+        }
+    },
+    "genderMessage": "{gender, select, male{Bienvenue, monsieur!} female{Bienvenue, madame!} other{Bienvenue!}}",
+    "@genderMessage": {
+        "placeholders": {
+            "gender": {}
+        }
+    }
+}
+  

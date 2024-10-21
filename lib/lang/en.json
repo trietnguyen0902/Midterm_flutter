@@ -1,0 +1,15 @@
+{
+    "app_title": "Weather & Time App",
+    "enter_city": "Enter City",
+    "current_time": "Current Time",
+    "temperature": "Temperature",
+    "description": "Description",
+    "humidity": "Humidity",
+    "pressure": "Pressure",
+    "select_language": "Select Language",
+    "select_unit": "Select Unit",
+    "kelvin": "Kelvin",
+    "celsius": "Celsius",
+    "fahrenheit": "Fahrenheit"
+  }
+  
