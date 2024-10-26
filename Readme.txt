@@ -30,11 +30,14 @@ Run the following command to get all the necessary dependencies:
 
 flutter pub get
 
-6. Run the Application
+6. Build flutter
+flutter build bundle
+
+7. Run the Application
 To run the application, use the following command:
 
 flutter run
-
+2
 
 Testing Specific Features
 1. Change City
