@@ -58,7 +58,7 @@ flutter:
 
 # Localization (l10n) configuration.
 l10n:
-  arb-dir: lib/i10n
+  arb-dir: lib/l10n
   template-arb-file: app_en.arb
   output-localization-file: app_localizations.dart
   output-class: AppLocalizations
