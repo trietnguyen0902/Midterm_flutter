@@ -1,21 +1,13 @@
 name: interlocal
 description: "A new Flutter project."
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none' 
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0" # Adjusted for Dart SDK compatibility
+  sdk: ">=3.0.0 <4.0.0"
 
-# Dependencies specify other packages that your package needs in order to work.
 dependencies:
   flutter:
     sdk: flutter
@@ -24,8 +16,8 @@ dependencies:
     sdk: flutter
   http: ^1.2.2
   intl: ^0.19.0
-  flutter_svg: ^0.22.0  # For displaying SVG icons
-  cached_network_image: ^3.2.3  # For loading images from the internet
+  flutter_svg: ^0.22.0
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:
@@ -33,28 +25,13 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 flutter:
-  uses-material-design: true # Material Icons
+  uses-material-design: true
+  generate: true
 
   assets:
-
     - lib/lang/en.json
     - lib/lang/es.json
     - lib/lang/fr.json
-
-  # To add assets to your application, add an assets section.
-  # Example:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-
-  # To add custom fonts to your application, add a fonts section here.
-  # Example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
 
 # Localization (l10n) configuration.
 l10n:
