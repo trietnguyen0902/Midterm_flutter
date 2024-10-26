@@ -1,0 +1,13 @@
+{
+    "@@locale": "fr",
+    "language": "Français",
+    "appName": "Application météo et heure",
+    "enterCity": "Insérer la Ville",
+    "getWeather": "Obtenir la météo",
+    "temperature": "Température",
+    "description": "Description",
+    "humidity": "Humidité",
+    "pressure": "Pression",
+    "time": "Heure actuelle",
+    "selectLanguage": "Sélectionnez la langue"
+}

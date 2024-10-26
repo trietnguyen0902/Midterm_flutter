@@ -1,0 +1,43 @@
+{
+    "@@locale": "en",
+    "language": "English",
+    "@language":{
+        "description": "The default language"
+    },
+    "appName": "Weather and Time App",
+    "@appName":{
+        "description": "The name of the app"
+    },
+    "enterCity": "Enter City",
+    "@enterCity":{
+        "description": "The name of the city"
+    },
+    "getWeather": "Get weather",
+    "@getWeather":{
+        "description": "Get weather of the chosen city"
+    },
+    "temperature": "Temperature",
+    "@temperature":{
+        "description": "Temperature of the chosen city"
+    },
+    "description": "Description",
+    "@description":{
+        "description": "Weather description of the chosen city"
+    },
+    "humidity": "Humidity",
+    "@humidity":{
+        "description": "Humidity of the chosen city"
+    },
+    "pressure": "Pressure",
+    "@pressure":{
+        "description": "Air pressure of the chosen city"
+    },
+    "time": "Current Time",
+    "@time":{
+        "description": "Local time of the chosen city"
+    },
+    "selectLanguage": "Select Language",
+    "@selectLanguage":{
+        "description": "Chosen language"
+    }
+}
