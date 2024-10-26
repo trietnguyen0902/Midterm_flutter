@@ -175,6 +175,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 _city = value;
               });
             },
+            onSubmitted: (value) {
+              _fetchWeatherAndTime(
+                  value); // Fetch new weather data when the user presses "Enter"
+            },
             decoration: InputDecoration(
               labelText: AppLocalizations.of(context)!.enterCity,
               fillColor: Colors.white,
@@ -202,6 +206,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () => _removeCity(city),
+                    color: Colors.red,
                   ),
                 );
               },
